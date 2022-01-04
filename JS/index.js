@@ -27,12 +27,12 @@ const gameBoard = (() => {
         },
         {
             id: "six",
-            value: "",
+            value: "X",
             clicked:false
         },
         {
             id: "seven",
-            value: "",
+            value: "O",
             clicked:false
         },
         {
@@ -66,28 +66,23 @@ const gameBoard = (() => {
     return {renderboard, getGameBoard, changeGameboard}
 })();
 
-const displayController = (() => {
-    let currentBoard = gameBoard.getGameBoard();
+const gameController = (() => {
 
-    const markBoard = () => {
-        
-    }
+    //TODO implement a function that calls the updateGameboard method of the GameBoard 
+    // when a player clicks on a square
+
+    //TODO implement a function to check the victory condition of the board
+
+    //TODO implement a function to track the currently active player.
+
 })();
 
-const createPlayer = (playerName,value,playerStatus) => {
+const createPlayer = (playerName,value) => {
     const name = playerName;
     const markerValue = value;
-    const status = playerStatus;
-
-    return {name, markerValue, status, markSquare}
+    return {name, markerValue}
 }
 
 
-const gameFlow = (() => {
-    
-     
-    return {}
-})();
 
-gameBoard.changeGameboard("one","O");
 gameBoard.renderboard(gameBoard.getGameBoard());
