@@ -3,8 +3,10 @@
 3. ~~Create player object~~
 4. ~~Game controller object~~
 
-The gameBoard component should hold the gameboard and a render metho that renders the gme screen with the contents of the gameboard array. The gameBoard component should also have a method to update the gameboard array with a square id, a player ID (1 or 2), and a value for that player (X or O) passed in.
+DONE:
+The gameBoard component should hold the gameboard and a render method that renders the game screen with the contents of the gameboard array. The gameBoard component should also have a method to update the gameboard array with a square id, a player ID (1 or 2), and a value for that player (X or O) passed in.
 
+TODO:
 The gameController component should have a function to track who the current active player is, and a function that calls the gameBoard's update gameboard method when the active player clicks. It should also have a function that tracks whether a player has won the game (using an array of win patterns).
 
 The player objects should merely have a name, a player ID (1 or 2) and a a marker value (X or O)

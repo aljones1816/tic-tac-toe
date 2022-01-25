@@ -47,23 +47,21 @@ const gameBoard = (() => {
         },
     ];
 
-    const renderboard =  (board) => {
-        board.map(x => {
+    const renderboard =  () => {
+        gameboard.map(x => {
             const square = document.getElementById(x.id);
             const newText = document.createTextNode(x.value);
             square.replaceChildren(newText);
         })
     }
 
-    const getGameBoard = () => {
-        return gameboard;
-    }
-
-    const changeGameboard = (squareID, newValue) => {
-        gameBoard[gameBoard.indexOf(id => id == squareID)]
+    const changeGameboard = (squareID, player) => {
+            let idToChange = gameboard.findIndex(square => square.id == squareID);
+            gameboard[idToChange].value = player.value;
+            renderboard();
     }
     
-    return {renderboard, getGameBoard, changeGameboard}
+    return {renderboard, changeGameboard}
 })();
 
 const gameController = (() => {
@@ -84,5 +82,6 @@ const createPlayer = (playerName,value) => {
 }
 
 
-
-gameBoard.renderboard(gameBoard.getGameBoard());
+// initialize game with a blank game board
+gameBoard.renderboard();
+gameBoard.changeGameboard("one", {name: "bob", value: "O"})
