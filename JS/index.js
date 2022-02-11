@@ -5,7 +5,7 @@ const gameBoard = (() => {
             value: "",
             clicked:false
         },
-        {
+        { 
             id: "two",
             value: "",
             clicked:false
@@ -106,7 +106,7 @@ const gameController = (() => {
             ["four","five","six"],
             ["seven","eight","nine"],
             ["one","four","seven"],
-            ["two","five","six"],
+            ["two","five","eight"],
             ["three","six","nine"],
             ["one","five","nine"],
             ["seven","five","three"]
@@ -114,21 +114,42 @@ const gameController = (() => {
 
         const activePlayer = players.filter(player => {
             return player.isActive
-          })
-
+          })[0]
+          
+         
         const activePlayerSquares = gameboard.filter(square => {
-            return square.value == activePlayer[0].value;
+            return square.value == activePlayer.value;
         })  
 
         const activePlayerSquareIds = activePlayerSquares.map(square => square.id);
+        
 
+        const gameOver = (winnerName,winStatus) => {
+            const modal = document.getElementById('modal-one');
+            modal.classList.add('open');
+            var para = document.createElement("p");
+            
+            if (winStatus) {
+                var node = document.createTextNode(winnerName + " wins!!!");
+            } else {
+                var node = document.createTextNode("It's a tie!!!");
+            }
+
+            para.appendChild(node);
+            modal.appendChild(para);
+        }
+
+        if (activePlayerSquareIds.length > 4) {
+            gameOver(activePlayer.name,false);
+        }
+        
         winningPlays.forEach(play => {
             if (play.every(elem => activePlayerSquareIds.indexOf(elem) > -1)) {
-                console.log(activePlayer[0].name + "wins!")
-            }
+                gameOver(activePlayer.name,true);
+            } 
         })
 
-
+ 
     }
 
     //Track the currently active player.
