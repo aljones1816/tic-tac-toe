@@ -9,9 +9,24 @@
 </head>
 <body>
     <h1>Tic Tac Toe</h1>
+    <form class = gameSetup>
+        <ul>
+            <li>
+                <label for="playerOne">Player One Name: </label>
+                <input type="text" id='playerOne'>
+                <button id = 'playerOneName'>Set Name</button>
+            </li>
+            <li>
+                <label for="playerTwo">Player Two Name: </label>
+                <input type="text" id='playerTwo'>
+                <button id='playerTwoName'>Set Name</button>
+            </li>
+        </ul>
+    </form>
     <div class ="flexbox">
         <div class="modal" id="modal-one">
         </div>
+        
         <div class="container">
             <div class="board-square" id="one"></div>
             <div class="board-square" id="two"></div>

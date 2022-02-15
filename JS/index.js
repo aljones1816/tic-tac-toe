@@ -80,11 +80,27 @@ const gameController = (() => {
         createPlayer("playerTwo","O",false)
     ]
 
+    // allow players to set custom names
+    const setPlayerOneName = document.getElementById('playerOneName');
+
+    setPlayerOneName.addEventListener('click', function (event) {
+        event.preventDefault();
+        players[0].name = document.getElementById('playerOne').value;
+    }) 
+    
+    const setPlayerTwoName = document.getElementById('playerTwoName');
+
+    setPlayerTwoName.addEventListener('click', function (event) {
+        event.preventDefault();
+        players[1].name = document.getElementById('playerTwo').value;
+    })  
+
 
     //Calls the changeGameboard method of the GameBoard 
     // when a player clicks on a square
     const boardSquares = document.querySelectorAll('.board-square')
     
+    // each time a square is pllayed check to see if the game has been won or tied
     boardSquares.forEach(square => {
         square.addEventListener('click', (e) => {
             players.forEach(player => {
@@ -92,14 +108,17 @@ const gameController = (() => {
                     gameBoard.changeGameboard(square.id,player)
                 }
             })
-            checkWin(gameBoard.gameboard);
+
+            let currentState = checkWin(gameBoard.gameboard)
+            updateGameState(currentState.gameStatus, currentState.activePlayer);
             controlActivePlayer();
             
         })
     });
 
-    //Check the victory condition of the board
+    //Check the victory condition of the board to see if there is a win or a tie
     const checkWin = (gameboard) => {
+        let gameStatus = 0;
 
         const winningPlays = [
             ["one","two","three"],
@@ -122,34 +141,38 @@ const gameController = (() => {
         })  
 
         const activePlayerSquareIds = activePlayerSquares.map(square => square.id);
-        
-
-        const gameOver = (winnerName,winStatus) => {
-            const modal = document.getElementById('modal-one');
-            modal.classList.add('open');
-            var para = document.createElement("p");
-            
-            if (winStatus) {
-                var node = document.createTextNode(winnerName + " wins!!!");
-            } else {
-                var node = document.createTextNode("It's a tie!!!");
-            }
-
-            para.appendChild(node);
-            modal.appendChild(para);
-        }
-
+    
         if (activePlayerSquareIds.length > 4) {
-            gameOver(activePlayer.name,false);
+            gameStatus = 2;
         }
         
         winningPlays.forEach(play => {
             if (play.every(elem => activePlayerSquareIds.indexOf(elem) > -1)) {
-                gameOver(activePlayer.name,true);
+                gameStatus = 1;
             } 
         })
 
- 
+        return { gameStatus, activePlayer }
+    }
+
+    // if a player has won or the game is tied update the gamestate with that condition
+    const updateGameState = (gameStatus, activePlayer) => {
+        const modal = document.getElementById('modal-one');
+        var para = document.createElement("p");
+        
+        if (gameStatus === 1 ) {
+            var node = document.createTextNode(activePlayer.name + " wins!!!");
+            modal.classList.add('open');
+            para.appendChild(node);
+            modal.appendChild(para);
+        } else if (gameStatus === 2) {
+            var node = document.createTextNode("It's a tie!!!");
+            modal.classList.add('open');
+            para.appendChild(node);
+            modal.appendChild(para);
+        } else return
+
+        
     }
 
     //Track the currently active player.
