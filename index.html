@@ -9,13 +9,39 @@
 </head>
 <body>
     <h1>Tic Tac Toe</h1>
+    <div class="modal-background" id='modal-back'>
+        <div class="modal" id="modal-one">
+            
+            <form class = gameSetup>
+                <ul>
+                    <li>
+                        <label for="playerOne">Player One Name: </label>
+                        <input type="text" id='playerOne' maxlength="24">
+                        
+                    </li>
+                    <li>
+                        <label for="playerTwo">Player Two Name: </label>
+                        <input type="text" id='playerTwo' maxlength="24">
+                        
+                    </li>
+                </ul>
+                <button id = 'playerOneName'>OK</button>
+            </form>
+            
+        </div>
+    </div>
     <div id='gameInfo'>
         <div class = "playerBoard" id="playerOneBoard">
-            <h2 id="p1Name">Player 1</h2>
+            <h2 id="p1Name">X - Player 1</h2>
             <p id="p1score">Wins: </p>
         </div>
+        <div class = "playerBoard" id = "drawBoard">
+            <h2>Draws</h2>
+            <p id ="draws">0</p>
+        </div>
+
         <div class = "playerBoard" id=""playerTwoBoard>
-            <h2 id="p2Name">Player 2</h2>
+            <h2 id="p2Name">O - Player 2</h2>
             <p id="p2score">Wins: </p>
         </div>
     </div>
@@ -33,23 +59,11 @@
         </div>
         </div>
     </div>
-    <form class = gameSetup>
-        <ul>
-            <li>
-                <label for="playerOne">Player One Name: </label>
-                <input type="text" id='playerOne' maxlength="24">
-                <button id = 'playerOneName'>Set Name</button>
-            </li>
-            <li>
-                <label for="playerTwo">Player Two Name: </label>
-                <input type="text" id='playerTwo' maxlength="24">
-                <button id='playerTwoName'>Set Name</button>
-            </li>
-        </ul>
-    </form>
+    
     <button id="newGame">New Game</button>
     <button id="resetScores">Reset Scores</button>
-    <div class="modal" id="gameAnnouncement">
+    <button id="openModal">Customize</button>
+    <div class="announcement" id="gameAnnouncement">
     </div>
     <script src="./JS/index.js"></script>
 </body>

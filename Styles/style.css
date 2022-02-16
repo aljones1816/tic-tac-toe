@@ -5,7 +5,7 @@ body {
 }
 
 .flexbox {
-    border: 1px solid red;
+
     display: flex;
     justify-content: center;
 }
@@ -34,10 +34,29 @@ body {
 }
 
 .modal {
-  width: 100%;
-  height: 100%;
+    
+    opacity: 0;
+    visibility: hidden;
+    padding: 1%;
+    width: 90%;
+    max-width: 400px;
+    margin: 100px auto;
+    background: #fff;
+    border-radius: 10px;
+  
 }
 
+.modal-background {
+
+    visibility: hidden;
+    background-color: rgba(0, 0, 0, 0.5);
+    position: fixed;
+  top: 0;
+  left: 0;
+  
+ width: 100%;
+ height: 100%;
+}
 
 
 ul {
@@ -50,8 +69,25 @@ ul {
 }
 
 .playerBoard {
-    border: 1px solid red;
     height: 100px;
     width: 400px;
     justify-content: space-around;
 }
+
+.announcement {
+    width: 100%
+}
+
+.open-background {
+    visibility: visible;
+    
+}
+
+.open {
+    
+    visibility: visible;
+    opacity: 1;
+    
+}
+
+

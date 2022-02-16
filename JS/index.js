@@ -63,6 +63,7 @@ const gameBoard = (() => {
             }
             renderboard();
     }
+
     
     return {gameboard, renderboard, changeGameboard}
 })();
@@ -78,6 +79,7 @@ const createPlayer = (playerName,markerValue,active) => {
 const gameController = (() => {
 
     let gameOver = 0;
+    let draws = 0;
 
     const players = [
         createPlayer("Player 1","X",true),
@@ -88,50 +90,89 @@ const gameController = (() => {
     const renderScores = () => {
         const p1scoreboard = document.getElementById("p1score");
         const p2scoreboard = document.getElementById("p2score");
+        const drawboard = document.getElementById("draws")
 
         p1scoreboard.innerHTML = "Wins: " + players[0].wins;
         p2scoreboard.innerHTML = "Wins: " + players[1].wins;
+        drawboard.innerHTML = draws;
     }
 
     // allow players to set custom names
+
+    const modalButton = document.getElementById('openModal');
+
+    modalButton.addEventListener('click', function (event) {
+        event.preventDefault();
+        const modal = document.getElementById('modal-one');
+        modal.classList.add('open');
+        const modalBack = document.getElementById('modal-back');
+        modalBack.classList.add('open-background')
+    })
+
+    function closeModal(event) {
+        event.preventDefault();
+        const modal = document.getElementById('modal-one');
+        modal.classList.remove('open');
+        const modalBack = document.getElementById('modal-back');
+        modalBack.classList.remove('open-background');
+    }
+
+    const modalBack = document.getElementById('modal-back');
+        modalBack.addEventListener('click', function(e) {
+  
+        const modal = document.getElementById('modal-one')
+        if (modal.contains(e.target)) {
+            return;
+        }
+    
+        closeModal(e);
+        })
+
     const setPlayerOneName = document.getElementById('playerOneName');
 
     setPlayerOneName.addEventListener('click', function (event) {
         event.preventDefault();
-        players[0].name = document.getElementById('playerOne').value;
-        let div = document.getElementById('p1Name');
-        div.innerHTML = players[0].name;
-        document.getElementById('playerOne').value = "";
+        if (document.getElementById('playerOne').value != "") {
+            players[0].name = document.getElementById('playerOne').value;
+            let div = document.getElementById('p1Name');
+            div.innerHTML = "X - "+ players[0].name;
+            document.getElementById('playerOne').value = "";
+        } 
+        
+        if (document.getElementById('playerTwo').value != "") {
+            players[1].name = document.getElementById('playerTwo').value;
+            let div = document.getElementById('p2Name');
+            div.innerHTML = "O - " + players[1].name;
+            document.getElementById('playerTwo').value = "";
+        }
+        
+        closeModal(event);
+        
     }) 
     
-    const setPlayerTwoName = document.getElementById('playerTwoName');
-
-    setPlayerTwoName.addEventListener('click', function (event) {
-        event.preventDefault();
-        players[1].name = document.getElementById('playerTwo').value;
-        let div = document.getElementById('p2Name');
-        div.innerHTML = players[1].name;
-        document.getElementById('playerTwo').value = "";
-    })  
 
 
     //Calls the changeGameboard method of the GameBoard 
     // when a player clicks on a square
     const boardSquares = document.querySelectorAll('.board-square')
     
-    // each time a square is pllayed check to see if the game has been won or tied
+    // each time a square is played check to see if the game has been won or tied
     boardSquares.forEach(square => {
         square.addEventListener('click', (e) => {
-            players.forEach(player => {
-                if (player.isActive) {
-                    gameBoard.changeGameboard(square.id,player)
-                }
-            })
-
-            let currentState = checkWin(gameBoard.gameboard)
-            updateGameState(currentState.gameStatus, currentState.activePlayer);
-            controlActivePlayer();
-            
+           const squareindex = gameBoard.gameboard.findIndex(space => space.id == square.id);
+           
+           const activesquarestatus = gameBoard.gameboard[squareindex].clicked;
+                players.forEach(player => {
+                    if (player.isActive) {
+                        gameBoard.changeGameboard(square.id,player)
+                    }
+                })
+                if (!activesquarestatus) {
+                    let currentState = checkWin(gameBoard.gameboard)
+                    updateGameState(currentState.gameStatus, currentState.activePlayer);
+                    controlActivePlayer();
+                } else return
+                
         })
     });
 
@@ -189,9 +230,12 @@ const gameController = (() => {
             gameOver = 1;
         } else if (gameStatus === 2) {
             announcement.innerHTML = "It's a tie!!!"
+            
             gameBoard.gameboard.forEach(square => {
             square.clicked = true;
             })
+            draws += 1;
+            renderScores();
         } else return
 
         
@@ -224,10 +268,12 @@ const gameController = (() => {
         resetGame();
     })
 
+    // allow players to start new game with cleared scores
     document.getElementById("resetScores").addEventListener('click', (e) => {
         e.preventDefault();
         players[0].wins = 0;
         players[1].wins = 0;
+        draws = 0;
         renderScores();
         resetGame();
     })
