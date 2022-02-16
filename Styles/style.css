@@ -5,6 +5,7 @@ body {
 }
 
 .flexbox {
+    border: 1px solid red;
     display: flex;
     justify-content: center;
 }
@@ -33,16 +34,24 @@ body {
 }
 
 .modal {
-  visibility: hidden;
-  background-color: rgba(0, 0, 0, 0.5);
-  position: fixed;
-  top: 0;
-  left: 0;
-  
   width: 100%;
   height: 100%;
 }
 
-.open {
-    visibility: visible;
+
+
+ul {
+    list-style-type:none;
+}
+
+#gameInfo {
+    display: flex;
+    justify-content: space-around;
+}
+
+.playerBoard {
+    border: 1px solid red;
+    height: 100px;
+    width: 400px;
+    justify-content: space-around;
 }

@@ -9,24 +9,17 @@
 </head>
 <body>
     <h1>Tic Tac Toe</h1>
-    <form class = gameSetup>
-        <ul>
-            <li>
-                <label for="playerOne">Player One Name: </label>
-                <input type="text" id='playerOne'>
-                <button id = 'playerOneName'>Set Name</button>
-            </li>
-            <li>
-                <label for="playerTwo">Player Two Name: </label>
-                <input type="text" id='playerTwo'>
-                <button id='playerTwoName'>Set Name</button>
-            </li>
-        </ul>
-    </form>
-    <div class ="flexbox">
-        <div class="modal" id="modal-one">
+    <div id='gameInfo'>
+        <div class = "playerBoard" id="playerOneBoard">
+            <h2 id="p1Name">Player 1</h2>
+            <p id="p1score">Wins: </p>
         </div>
-        
+        <div class = "playerBoard" id=""playerTwoBoard>
+            <h2 id="p2Name">Player 2</h2>
+            <p id="p2score">Wins: </p>
+        </div>
+    </div>
+    <div class ="flexbox">
         <div class="container">
             <div class="board-square" id="one"></div>
             <div class="board-square" id="two"></div>
@@ -39,6 +32,24 @@
             <div class="board-square" id="nine"></div>
         </div>
         </div>
+    </div>
+    <form class = gameSetup>
+        <ul>
+            <li>
+                <label for="playerOne">Player One Name: </label>
+                <input type="text" id='playerOne' maxlength="24">
+                <button id = 'playerOneName'>Set Name</button>
+            </li>
+            <li>
+                <label for="playerTwo">Player Two Name: </label>
+                <input type="text" id='playerTwo' maxlength="24">
+                <button id='playerTwoName'>Set Name</button>
+            </li>
+        </ul>
+    </form>
+    <button id="newGame">New Game</button>
+    <button id="resetScores">Reset Scores</button>
+    <div class="modal" id="gameAnnouncement">
     </div>
     <script src="./JS/index.js"></script>
 </body>

@@ -71,14 +71,27 @@ const createPlayer = (playerName,markerValue,active) => {
     const name = playerName;
     const value = markerValue;
     const isActive = active;
-    return {name, value, isActive}
+    const wins = 0;
+    return {name, value, isActive, wins}
 }
 
 const gameController = (() => {
+
+    let gameOver = 0;
+
     const players = [
-        createPlayer("playerOne","X",true),
-        createPlayer("playerTwo","O",false)
+        createPlayer("Player 1","X",true),
+        createPlayer("Player 2","O",false)
     ]
+
+    // render player scores
+    const renderScores = () => {
+        const p1scoreboard = document.getElementById("p1score");
+        const p2scoreboard = document.getElementById("p2score");
+
+        p1scoreboard.innerHTML = "Wins: " + players[0].wins;
+        p2scoreboard.innerHTML = "Wins: " + players[1].wins;
+    }
 
     // allow players to set custom names
     const setPlayerOneName = document.getElementById('playerOneName');
@@ -86,6 +99,9 @@ const gameController = (() => {
     setPlayerOneName.addEventListener('click', function (event) {
         event.preventDefault();
         players[0].name = document.getElementById('playerOne').value;
+        let div = document.getElementById('p1Name');
+        div.innerHTML = players[0].name;
+        document.getElementById('playerOne').value = "";
     }) 
     
     const setPlayerTwoName = document.getElementById('playerTwoName');
@@ -93,6 +109,9 @@ const gameController = (() => {
     setPlayerTwoName.addEventListener('click', function (event) {
         event.preventDefault();
         players[1].name = document.getElementById('playerTwo').value;
+        let div = document.getElementById('p2Name');
+        div.innerHTML = players[1].name;
+        document.getElementById('playerTwo').value = "";
     })  
 
 
@@ -157,19 +176,22 @@ const gameController = (() => {
 
     // if a player has won or the game is tied update the gamestate with that condition
     const updateGameState = (gameStatus, activePlayer) => {
-        const modal = document.getElementById('modal-one');
-        var para = document.createElement("p");
+        const announcement = document.getElementById('gameAnnouncement');
         
-        if (gameStatus === 1 ) {
-            var node = document.createTextNode(activePlayer.name + " wins!!!");
-            modal.classList.add('open');
-            para.appendChild(node);
-            modal.appendChild(para);
+        if (gameStatus === 1 & gameOver === 0) {
+            announcement.innerHTML = activePlayer.name + " wins!!!";
+            gameBoard.gameboard.forEach(square => {
+            square.clicked = true;
+            })
+            activePlayerIndex = players.findIndex((obj => obj.isActive));
+            players[activePlayerIndex].wins += 1;
+            renderScores();
+            gameOver = 1;
         } else if (gameStatus === 2) {
-            var node = document.createTextNode("It's a tie!!!");
-            modal.classList.add('open');
-            para.appendChild(node);
-            modal.appendChild(para);
+            announcement.innerHTML = "It's a tie!!!"
+            gameBoard.gameboard.forEach(square => {
+            square.clicked = true;
+            })
         } else return
 
         
@@ -182,10 +204,40 @@ const gameController = (() => {
         })
     }
 
+    // allow players to start a new game without resetting the score
+    const resetGame = () => {
+        gameBoard.gameboard.forEach(square => {
+            square.clicked = false;
+            square.value = "";
+            
+        })
+        players[0].isActive = true;
+        players[1].isActive = false;
+        gameOver = 0;
+        const announcement = document.getElementById('gameAnnouncement');
+        announcement.innerHTML = "";
+        gameBoard.renderboard();
+    }
+
+    document.getElementById("newGame").addEventListener('click', (e) => {
+        e.preventDefault();
+        resetGame();
+    })
+
+    document.getElementById("resetScores").addEventListener('click', (e) => {
+        e.preventDefault();
+        players[0].wins = 0;
+        players[1].wins = 0;
+        renderScores();
+        resetGame();
+    })
+
+    return { renderScores }
 })();
 
 const initializeGame = () => {
     gameBoard.renderboard();
+    gameController.renderScores();
     
 }
 // initialize game with a blank game board
