@@ -15,6 +15,9 @@ body {
     display: grid;
     grid-template-columns: repeat(3, 100px);
     grid-template-rows: repeat(3, 100px);
+    grid-gap: 4px;
+    background-color: black;
+    margin-bottom: 40px;
     
 }
 
@@ -23,7 +26,7 @@ body {
     vertical-align: middle;
     line-height: 100px; 
     background-color: white;
-    border: solid 2px black;
+    
     font-size: 5em;
 
 }
@@ -65,17 +68,21 @@ ul {
 
 #gameInfo {
     display: flex;
-    justify-content: space-around;
+    padding-left: 40px;
+    padding-right: 40px;
+    justify-content: space-between;
+    margin-bottom: 40px;
 }
 
 .playerBoard {
     height: 100px;
-    width: 400px;
-    justify-content: space-around;
+    width: 200px;
+    text-align: center;
 }
 
 .announcement {
-    width: 100%
+    width: 100%;
+    margin-top: 40px;
 }
 
 .open-background {
@@ -91,3 +98,15 @@ ul {
 }
 
 
+
+.inactivePlayer {
+    border-bottom: 2px solid grey;
+    
+}
+
+
+
+.activePlayer {
+    font-size: 1.5em;
+    border-bottom: 2px solid blue;
+}

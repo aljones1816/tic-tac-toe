@@ -8,7 +8,8 @@
     <link rel="stylesheet" href="./Styles/style.css">
 </head>
 <body>
-    <h1>Tic Tac Toe</h1>
+    <div class="gameContainer">
+        <h1>Tic Tac Toe</h1>
     <div class="modal-background" id='modal-back'>
         <div class="modal" id="modal-one">
             
@@ -31,16 +32,16 @@
         </div>
     </div>
     <div id='gameInfo'>
-        <div class = "playerBoard" id="playerOneBoard">
-            <h2 id="p1Name">X - Player 1</h2>
+        <div class = "playerBoard activePlayer" id="playerOneBoard">
+            <h2 id="p1Name" >X - Player 1</h2>
             <p id="p1score">Wins: </p>
         </div>
-        <div class = "playerBoard" id = "drawBoard">
+        <div class = "playerBoard " id = "drawBoard">
             <h2>Draws</h2>
             <p id ="draws">0</p>
         </div>
 
-        <div class = "playerBoard" id=""playerTwoBoard>
+        <div class = "playerBoard inactivePlayer" id="playerTwoBoard">
             <h2 id="p2Name">O - Player 2</h2>
             <p id="p2score">Wins: </p>
         </div>
@@ -59,12 +60,16 @@
         </div>
         </div>
     </div>
+    <div>
+        <button id="newGame">New Game</button>
+        <button id="resetScores">Reset Scores</button>
+        <button id="openModal">Customize</button>
+    </div>
     
-    <button id="newGame">New Game</button>
-    <button id="resetScores">Reset Scores</button>
-    <button id="openModal">Customize</button>
     <div class="announcement" id="gameAnnouncement">
     </div>
+    </div>
+    
     <script src="./JS/index.js"></script>
 </body>
 </html>

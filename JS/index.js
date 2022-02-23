@@ -68,12 +68,13 @@ const gameBoard = (() => {
     return {gameboard, renderboard, changeGameboard}
 })();
 
-const createPlayer = (playerName,markerValue,active) => {
+const createPlayer = (playerName,playerValue,ID,status) => {
     const name = playerName;
-    const value = markerValue;
-    const isActive = active;
+    const value = playerValue;
+    const isActive = status;
     const wins = 0;
-    return {name, value, isActive, wins}
+    const playerID = ID;
+    return {name, value, isActive, wins, playerID}
 }
 
 const gameController = (() => {
@@ -82,8 +83,8 @@ const gameController = (() => {
     let draws = 0;
 
     const players = [
-        createPlayer("Player 1","X",true),
-        createPlayer("Player 2","O",false)
+        createPlayer("Player 1","X","playerOneBoard",true),
+        createPlayer("Player 2","O","playerTwoBoard",false)
     ]
 
     // render player scores
@@ -243,11 +244,32 @@ const gameController = (() => {
 
     //Track the currently active player.
     const controlActivePlayer = () => {
+        //TODO make so that activePlayer doesn't change on game end
+            changeActivePlayerHighlight();
         players.forEach(player => {
             player.isActive = !player.isActive;
+            // TODO update the active player graphic
+            //changeActivePlayerHighlight();
         })
     }
 
+    const changeActivePlayerHighlight = () => {
+            players.forEach(player => {
+                if (player.isActive) {
+                    playerElement = document.getElementById(player.playerID);
+                    playerElement.classList.remove("activePlayer");
+                    playerElement.classList.add("inactivePlayer")
+                } else {
+                    playerElement = document.getElementById(player.playerID);
+                    playerElement.classList.remove("inactivePlayer");
+                    playerElement.classList.add("activePlayer")
+                }
+            })
+        
+        
+    }
+
+ 
     // allow players to start a new game without resetting the score
     const resetGame = () => {
         gameBoard.gameboard.forEach(square => {
@@ -255,12 +277,18 @@ const gameController = (() => {
             square.value = "";
             
         })
+        if (players[1].isActive) {
+            changeActivePlayerHighlight();
+        }
+        
         players[0].isActive = true;
         players[1].isActive = false;
+        
         gameOver = 0;
         const announcement = document.getElementById('gameAnnouncement');
         announcement.innerHTML = "";
         gameBoard.renderboard();
+        
     }
 
     document.getElementById("newGame").addEventListener('click', (e) => {
