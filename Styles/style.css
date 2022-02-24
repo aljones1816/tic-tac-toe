@@ -1,112 +1,95 @@
 body {
-    font-family: arial;
-    text-align: center;
- 
+  font-family: arial;
+  text-align: center;
 }
 
 .flexbox {
-
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 .container {
-    
-    display: grid;
-    grid-template-columns: repeat(3, 100px);
-    grid-template-rows: repeat(3, 100px);
-    grid-gap: 4px;
-    background-color: black;
-    margin-bottom: 40px;
-    
+  display: grid;
+  grid-template-columns: repeat(3, 100px);
+  grid-template-rows: repeat(3, 100px);
+  grid-gap: 4px;
+  background-color: black;
+  margin-bottom: 40px;
 }
 
 .board-square {
-    text-align: center;
-    vertical-align: middle;
-    line-height: 100px; 
-    background-color: white;
-    
-    font-size: 5em;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 100px;
+  background-color: white;
 
+  font-size: 5em;
 }
 
 .board-square:hover {
-    background-color: lightblue;
-    cursor: pointer;
+  background-color: lightblue;
+  cursor: pointer;
 }
 
 .modal {
-    
-    opacity: 0;
-    visibility: hidden;
-    padding: 1%;
-    width: 90%;
-    max-width: 400px;
-    margin: 100px auto;
-    background: #fff;
-    border-radius: 10px;
-  
+  opacity: 0;
+  visibility: hidden;
+  padding: 1%;
+  width: 90%;
+  max-width: 400px;
+  margin: 100px auto;
+  background: #fff;
+  border-radius: 10px;
 }
 
 .modal-background {
-
-    visibility: hidden;
-    background-color: rgba(0, 0, 0, 0.5);
-    position: fixed;
+  visibility: hidden;
+  background-color: rgba(0, 0, 0, 0.5);
+  position: fixed;
   top: 0;
   left: 0;
-  
- width: 100%;
- height: 100%;
+
+  width: 100%;
+  height: 100%;
 }
 
-
 ul {
-    list-style-type:none;
+  list-style-type: none;
 }
 
 #gameInfo {
-    display: flex;
-    padding-left: 40px;
-    padding-right: 40px;
-    justify-content: space-between;
-    margin-bottom: 40px;
+  display: flex;
+  padding-left: 40px;
+  padding-right: 40px;
+  justify-content: space-between;
+  margin-bottom: 40px;
 }
 
 .playerBoard {
-    height: 100px;
-    width: 200px;
-    text-align: center;
+  height: 100px;
+  width: 200px;
+  text-align: center;
 }
 
 .announcement {
-    width: 100%;
-    margin-top: 40px;
+  width: 100%;
+  margin-top: 40px;
 }
 
 .open-background {
-    visibility: visible;
-    
+  visibility: visible;
 }
 
 .open {
-    
-    visibility: visible;
-    opacity: 1;
-    
+  visibility: visible;
+  opacity: 1;
 }
-
-
 
 .inactivePlayer {
-    border-bottom: 2px solid grey;
-    
+  border-bottom: 2px solid grey;
 }
 
-
-
 .activePlayer {
-    font-size: 1.5em;
-    border-bottom: 2px solid blue;
+  border-bottom: 2px solid blue;
+  transition: border-bottom 1s;
 }
