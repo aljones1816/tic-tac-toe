@@ -166,7 +166,7 @@ const gameController = (() => {
       });
       if (!activesquarestatus) {
         let currentState = checkWin(gameBoard.gameboard);
-        updateGameState(currentState.gameStatus, currentState.activePlayer);
+        updateGameState(currentState.gameStatus, currentState.activePlayer,currentState.winningPlay);
         controlActivePlayer();
       } else return;
     });
@@ -175,6 +175,7 @@ const gameController = (() => {
   //Check the victory condition of the board to see if there is a win or a tie
   const checkWin = (gameboard) => {
     let gameStatus = 0;
+    let winningPlay = [];
 
     const winningPlays = [
       ["one", "two", "three"],
@@ -206,14 +207,16 @@ const gameController = (() => {
     winningPlays.forEach((play) => {
       if (play.every((elem) => activePlayerSquareIds.indexOf(elem) > -1)) {
         gameStatus = 1;
+        winningPlay = play;
       }
+      
     });
 
-    return { gameStatus, activePlayer };
+    return { gameStatus, activePlayer, winningPlay };
   };
 
   // if a player has won or the game is tied update the gamestate with that condition
-  const updateGameState = (gameStatus, activePlayer) => {
+  const updateGameState = (gameStatus, activePlayer, winningPlay) => {
     const announcement = document.getElementById("gameAnnouncement");
 
     if ((gameStatus === 1) & (gameOver === 0)) {
@@ -224,6 +227,12 @@ const gameController = (() => {
       activePlayerIndex = players.findIndex((obj) => obj.isActive);
       players[activePlayerIndex].wins += 1;
       renderScores();
+
+winningPlay.forEach(square => {
+  winningSquare = document.getElementById(square)
+  winningSquare.classList.add('winner');
+})
+
       gameOver = 1;
     } else if (gameStatus === 2) {
       announcement.innerHTML = "It's a tie!!!";
@@ -238,14 +247,11 @@ const gameController = (() => {
 
   //Track the currently active player.
   const controlActivePlayer = () => {
-    //TODO make so that activePlayer doesn't change on game end
 
     changeActivePlayerHighlight();
 
     players.forEach((player) => {
       player.isActive = !player.isActive;
-      // TODO update the active player graphic
-      //changeActivePlayerHighlight();
     });
   };
 
@@ -286,6 +292,10 @@ const gameController = (() => {
 
     const announcement = document.getElementById("gameAnnouncement");
     announcement.innerHTML = "";
+    gameBoard.gameboard.forEach(square => {
+      const boardDiv = document.getElementById(square.id);
+      boardDiv.classList.remove('winner');
+    })
     gameBoard.renderboard();
   };
 

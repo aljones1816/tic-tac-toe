@@ -150,3 +150,12 @@ input[type="text"] {
   margin: 8px 0;
   box-sizing: border-box;
 }
+
+hr {
+  width: 2px;
+  color: red;
+}
+
+.winner {
+  background-image: linear-gradient(rgba(134, 211, 247, 0.4) 0 0);
+}
